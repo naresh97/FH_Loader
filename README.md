@@ -5,21 +5,33 @@ A quick and easy way to load resources from the FH websites (i.e. Stundenplan or
 
 ##Usage:
 Load the library into your code
-```require('FH_Loader.php')```
+```
+require('FH_Loader.php')
+```
 
 Initialize the library
-```$fh->new FH_Loader("USERNAME", "PASSWORD");```
+```
+$fh->new FH_Loader("USERNAME", "PASSWORD");
+```
 
 The username is usually in the format of : xx12345s
 
 Load the Stundenplan in iCal format:
-```$fh->loadCal();```
+```
+$fh->loadCal();
+```
 
 Load ILIAS mails
-```$fh->loadMailsJson();```
+```
+$fh->loadMailsJson();
+```
 
 Load a certain page on CampusOffice
-```fh->loadCampusURL("URL");```
+```
+fh->loadCampusURL("URL");
+```
 
 Load a certain page on ILIAS
-``fh->loadIliasURL("URL");```
+```
+fh->loadIliasURL("URL");
+```

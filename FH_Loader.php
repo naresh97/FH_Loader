@@ -2,18 +2,22 @@
 	define("FH_LOADER_LOGIN","https://www.campusoffice.fh-aachen.de/views/campus/search.asp");
 	define("FH_LOADER_ILIAS_LOGIN","https://www.ili.fh-aachen.de/ilias.php?lang=de&client_id=elearning&cmd=post&cmdClass=ilstartupgui&cmdNode=ta&baseClass=ilStartUpGUI&rtoken=");
 	define("FH_LOADER_ICAL",'https://www.campusoffice.fh-aachen.de/views/calendar/iCalExport.asp?startdt=01.09.2016&enddt=28.02.2017');
-	define("FH_LOADER_ILI_MAIL","https://www.ili.fh-aachen.de/ilias.php?mobj_id=0&cmdClass=ilmailfoldergui&cmdNode=d9:d5&baseClass=ilMailGUI");
+	define("FH_LOADER_ILI_MAIL","https://www.ili.fh-aachen.de/ilias.php?mobj_id=0&cmdClass=ilmailfoldergui&cmdNode=dd:d9&baseClass=ilMailGUI");
+	define("FH_LOADER_ILI_GRUPPEN", "https://www.ili.fh-aachen.de/ilias.php?baseClass=ilPersonalDesktopGUI&cmd=jumpToMemberships");
+	define("FH_LOADER_URI","https://www.ili.fh-aachen.de/");
 	
 	class IliasMessage{
 		public $subject;
 		public $sender;
 		public $dat;
+		public $url;
 		
-		function __construct($s,$sen,$d)
+		function __construct($a,$b,$c,$d)
 		{
-			$this->subject=$s;
-			$this->sender=$sen;
+			$this->subject=$b;
+			$this->sender=$a;
 			$this->dat=$d;
+			$this->url=$c;
 		}
 	}
 	
@@ -94,8 +98,8 @@
 			$dom=new DOMDocument();
 			@$dom->loadHTML($this->loadIliasHTML(FH_LOADER_ILI_MAIL));
 			$table=$dom->getElementById('mail_folder_tbl_357260');
-			
 			$message=array();
+			
 			$items = $table->getElementsByTagName('tr');
 			$i=0;
 			foreach ($items as $node) {
@@ -116,16 +120,20 @@
 					if($c==4){
 						
 						array_push($inf,$newdoc->saveHTML());
+						
 					}
 					if($c==6){
 						array_push($inf,$block->nodeValue);
+						
+						array_push($inf, FH_LOADER_URI . $clone->getAttribute("href"));
+						
 					}
 					if($c==8){
 						array_push($inf,$newdoc->saveHTML());
 					}
 					$c+=1;
 				}
-				array_push($message, new IliasMessage($inf[1],$inf[0],$inf[2]));
+				array_push($message, new IliasMessage($inf[0],$inf[1],$inf[2],$inf[3]));
 			}
 			return $message;
 		}

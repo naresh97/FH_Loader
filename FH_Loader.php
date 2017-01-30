@@ -176,7 +176,7 @@
 			return $groups;
 		}
 		function loadRegisteredGroupsJson(){
-			return json_encode(loadRegisteredGroups());
+			return json_encode($this->loadRegisteredGroups());
 		}
 	}
 	

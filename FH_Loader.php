@@ -152,6 +152,32 @@
 			$msgStr = $div1->nodeValue;
 			return $msgStr;
 		}
+		
+		function loadRegisteredGroups(){
+			$dom = new DOMDocument();
+			@$dom->loadHTML($this->loadIliasHTML(FH_LOADER_ILI_GRUPPEN));
+			$classname="il_ContainerItemTitle";
+			$finder = new DomXPath($dom);
+			$spaner = $finder->query("//*[contains(@class, '$classname')]");
+			
+			$groups=array();
+			
+			foreach($spaner as $node){
+				if($node->tagName == "a"){
+					$gcont=array();
+					
+					$gcont["name"]=$node->textContent;
+					$gcont["url"]=$node->getAttribute("href");
+					
+					array_push($groups,$gcont);
+				}
+			}
+			
+			return $groups;
+		}
+		function loadRegisteredGroupsJson(){
+			return json_encode(loadRegisteredGroups());
+		}
 	}
 	
 	

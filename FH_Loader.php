@@ -10,14 +10,14 @@
 		public $subject;
 		public $sender;
 		public $dat;
-		public $url;
+		public $msg;
 		
 		function __construct($a,$b,$c,$d)
 		{
 			$this->subject=$b;
 			$this->sender=$a;
 			$this->dat=$d;
-			$this->url=$c;
+			$this->msg=$c;
 		}
 	}
 	
@@ -125,7 +125,9 @@
 					if($c==6){
 						array_push($inf,$block->nodeValue);
 						
-						array_push($inf, FH_LOADER_URI . $clone->getAttribute("href"));
+						array_push($inf, $this->loadSpecificMail(FH_LOADER_URI . $clone->getAttribute("href")));
+						
+						
 						
 					}
 					if($c==8){
@@ -140,6 +142,15 @@
 	
 		function loadMailsJson(){
 			return json_encode($this->loadMails());
+		}
+		
+		function loadSpecificMail($url){
+			$dom = new DOMDocument();
+			@$dom->loadHTML($this->loadIliasHTML($url));
+			$form = $dom->getElementById("form_");
+			$div1 = $form->getElementsByTagName("div")[0];
+			$msgStr = $div1->nodeValue;
+			return $msgStr;
 		}
 	}
 	

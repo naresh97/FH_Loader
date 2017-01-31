@@ -6,10 +6,13 @@ A quick and easy way to load resources from the FH websites (i.e. Stundenplan or
 ##Usage:
 ```php
 //Load the library into your code
-require('FH_Loader.php')
+require('FH_Loader.php');
 
 //Initialize the library with FH login details (username in format aaXXXXs)
 $fh = new FH_Loader("USERNAME", "PASSWORD");
+
+//Load User's First Name
+$first_name = $fh->loadPersonal()["fname"];
 ```
 
 ###Function Reference###

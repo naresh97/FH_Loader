@@ -98,7 +98,12 @@
 		public function loadMails(){
 			$dom=new DOMDocument();
 			@$dom->loadHTML($this->loadIliasHTML(FH_LOADER_ILI_MAIL));
-			$table=$dom->getElementById('mail_folder_tbl_357260');
+			
+			$finder = new DomXPath($dom);
+			$spaner = $finder->query("//*[./text()='Verschieben nach: Posteingang']");
+			$specialCode = $spaner[0]->getAttribute("value");
+			
+			$table=$dom->getElementById("mail_folder_tbl_$specialCode");
 			$message=array();
 			
 			$items = $table->getElementsByTagName('tr');

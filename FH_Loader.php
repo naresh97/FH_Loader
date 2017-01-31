@@ -5,6 +5,7 @@
 	define("FH_LOADER_ILI_MAIL","https://www.ili.fh-aachen.de/ilias.php?mobj_id=0&cmdClass=ilmailfoldergui&cmdNode=dd:d9&baseClass=ilMailGUI");
 	define("FH_LOADER_ILI_GRUPPEN", "https://www.ili.fh-aachen.de/ilias.php?baseClass=ilPersonalDesktopGUI&cmd=jumpToMemberships");
 	define("FH_LOADER_URI","https://www.ili.fh-aachen.de/");
+	define("FH_LOADER_PERSONAL","https://www.ili.fh-aachen.de/ilias.php?cmdClass=ilpersonalprofilegui&cmdNode=od:oe&baseClass=ilPersonalDesktopGUI");
 	
 	class IliasMessage{
 		public $subject;
@@ -177,6 +178,22 @@
 		}
 		function loadRegisteredGroupsJson(){
 			return json_encode($this->loadRegisteredGroups());
+		}
+		function loadPersonal(){
+			$dom = new DOMDocument();
+			@$dom->loadHTML($this->loadIliasHTML(FH_LOADER_PERSONAL));
+			
+			$profile=array();
+			
+			$profile["fname"]=$dom->getElementById("usr_firstname")->getAttribute("value");
+			$profile["lname"]=$dom->getElementById("usr_lastname")->getAttribute("value");
+			$profile["email"]=$dom->getElementById("usr_email")->getAttribute("value");
+			$profile["matrik"]=$dom->getElementById("usr_matriculation")->getAttribute("value");
+			
+			return $profile;
+		}
+		function loadPersonalJson(){
+			return json_encode($this->loadPersonal());
 		}
 	}
 	

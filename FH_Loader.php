@@ -2,7 +2,7 @@
 	define("FH_LOADER_LOGIN","https://www.campusoffice.fh-aachen.de/views/campus/search.asp");
 	define("FH_LOADER_ILIAS_LOGIN","https://www.ili.fh-aachen.de/ilias.php?lang=de&client_id=elearning&cmd=post&cmdClass=ilstartupgui&cmdNode=xk&baseClass=ilStartUpGUI&rtoken=");
 	define("FH_LOADER_ICAL",'https://www.campusoffice.fh-aachen.de/views/calendar/iCalExport.asp?startdt=01.09.2018&enddt=28.02.2019%2023:59:59');
-	define("FH_LOADER_ILI_MAIL","https://www.ili.fh-aachen.de/ilias.php?mobj_id=0&cmdClass=ilmailfoldergui&cmdNode=dd:d9&baseClass=ilMailGUI");
+	define("FH_LOADER_ILI_MAIL","https://www.ili.fh-aachen.de/ilias.php?mobj_id=0&cmdClass=ilmailfoldergui&cmdNode=gd:g9&baseClass=ilMailGUI");
 	define("FH_LOADER_ILI_GRUPPEN", "https://www.ili.fh-aachen.de/ilias.php?baseClass=ilPersonalDesktopGUI&cmd=jumpToMemberships");
 	define("FH_LOADER_URI","https://www.ili.fh-aachen.de/");
 	define("FH_LOADER_PERSONAL","https://www.ili.fh-aachen.de/ilias.php?cmdClass=ilpersonalprofilegui&cmdNode=ss:st&baseClass=ilPersonalDesktopGUI");
@@ -101,7 +101,8 @@
 			
 			$finder = new DomXPath($dom);
 			$spaner = $finder->query("//*[./text()='Verschieben nach: Posteingang']");
-			$specialCode = $spaner[0]->getAttribute("value");
+
+			$specialCode = iterator_to_array($spaner)[0]->getAttribute("value");
 			
 			$table=$dom->getElementById("mail_folder_tbl_$specialCode");
 			$message=array();
@@ -154,7 +155,7 @@
 			$dom = new DOMDocument();
 			@$dom->loadHTML($this->loadIliasHTML($url));
 			$form = $dom->getElementById("form_");
-			$div1 = $form->getElementsByTagName("div")[0];
+			$div1 = iterator_to_array($form->getElementsByTagName("div"))[0];
 			$msgStr = $div1->nodeValue;
 			return $msgStr;
 		}

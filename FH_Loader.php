@@ -1,12 +1,11 @@
 <?PHP
 	define("FH_LOADER_LOGIN","https://www.campusoffice.fh-aachen.de/views/campus/search.asp");
-	define("FH_LOADER_ILIAS_LOGIN","https://www.ili.fh-aachen.de/ilias.php?lang=de&client_id=elearning&cmd=post&cmdClass=ilstartupgui&cmdNode=ta&baseClass=ilStartUpGUI&rtoken=");
+	define("FH_LOADER_ILIAS_LOGIN","https://www.ili.fh-aachen.de/ilias.php?lang=de&client_id=elearning&cmd=post&cmdClass=ilstartupgui&cmdNode=xk&baseClass=ilStartUpGUI&rtoken=");
 	define("FH_LOADER_ICAL",'https://www.campusoffice.fh-aachen.de/views/calendar/iCalExport.asp?startdt=01.09.2018&enddt=28.02.2019%2023:59:59');
 	define("FH_LOADER_ILI_MAIL","https://www.ili.fh-aachen.de/ilias.php?mobj_id=0&cmdClass=ilmailfoldergui&cmdNode=dd:d9&baseClass=ilMailGUI");
 	define("FH_LOADER_ILI_GRUPPEN", "https://www.ili.fh-aachen.de/ilias.php?baseClass=ilPersonalDesktopGUI&cmd=jumpToMemberships");
 	define("FH_LOADER_URI","https://www.ili.fh-aachen.de/");
-	define("FH_LOADER_PERSONAL","https://www.ili.fh-aachen.de/ilias.php?cmdClass=ilpersonalprofilegui&cmdNode=qx:qy&baseClass=ilPersonalDesktopGUI");
-	
+	define("FH_LOADER_PERSONAL","https://www.ili.fh-aachen.de/ilias.php?cmdClass=ilpersonalprofilegui&cmdNode=ss:st&baseClass=ilPersonalDesktopGUI");
 	class IliasMessage{
 		public $subject;
 		public $sender;
@@ -67,8 +66,9 @@
 			curl_setopt($ch,CURLOPT_RETURNTRANSFER,true);
 			curl_setopt($ch,CURLOPT_POST,1);
 			curl_setopt($ch,CURLOPT_SSL_VERIFYPEER, false);
-			curl_setopt($ch,CURLOPT_POSTFIELDS,"username=$user&password=$pass");
+			curl_setopt($ch,CURLOPT_POSTFIELDS,"username=$user&password=$pass&cmd[doStandardAuthentication]=Anmelden");
 			$output=curl_exec($ch);
+			
 		}
 		public function loadIliasHTML($url)
 		{
